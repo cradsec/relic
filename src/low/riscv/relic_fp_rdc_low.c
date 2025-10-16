@@ -111,7 +111,7 @@ void fp_rdcs_low(dig_t *c, const dig_t *a, const dig_t *m) {
 	}
 	fp_copy(c, r);
 }
-
+#ifdef __NO_RISCV_ASM__
 void fp_rdcn_low(dig_t *c, dig_t *a) {
 	dig_t r, u = *(fp_prime_get_rdc());
 	const dig_t *m = fp_prime_get();
@@ -127,3 +127,4 @@ void fp_rdcn_low(dig_t *c, dig_t *a) {
 	}
 	fp_addm_low(c, a, a - RLC_FP_DIGS);
 }
+#endif
