@@ -20,8 +20,8 @@
         mul     \TL,\A,\B0
         add     \R0,\R0,\TL
         sltu    \TL,\R0,\TL
+	add	\TH,\TH,\TL
         add     \R1,\R1,\TH
-        add     \R1,\R1,\TL
         sltu    \TL,\R1,\TH
         add     \R2,\R2,\TL
         sltu    \TL,\R2,\TL
@@ -33,8 +33,8 @@
         mul     \TL,\A,\B1
         add     \R1,\R1,\TL
         sltu    \TL,\R1,\TL
+	add	\TH,\TH,\TL
         add     \R2,\R2,\TH
-        add     \R2,\R2,\TL
         sltu    \TL,\R2,\TH
         add     \R3,\R3,\TL
         sltu    \TL,\R3,\TL
@@ -44,8 +44,8 @@
         mul     \TL,\A,\B2
         add     \R2,\R2,\TL
         sltu    \TL,\R2,\TL
+	add	\TH,\TH,\TL
         add     \R3,\R3,\TH
-        add     \R3,\R3,\TL
         sltu    \TL,\R3,\TH
         add     \R4,\R4,\TL
 
@@ -53,8 +53,8 @@
         mul     \TL,\A,\B3
         add     \R3,\R3,\TL
         sltu    \TL,\R3,\TL
+	add	\TH,\TH,\TL
         add     \R4,\R4,\TH
-        add     \R4,\R4,\TL
 .endm
 
 /*
