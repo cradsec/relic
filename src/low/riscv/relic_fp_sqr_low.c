@@ -37,11 +37,11 @@
 /*============================================================================*/
 /* Public definitions                                                         */
 /*============================================================================*/
-
+#ifdef __NO_RISCV_ASM__
 void fp_sqrn_low(dig_t *c, const dig_t *a) {
 	mpn_sqr(c, a, RLC_FP_DIGS);
 }
-
+#endif
 void fp_sqrm_low(dig_t *c, const dig_t *a) {
 	rlc_align dig_t t[2 * RLC_FP_DIGS];
 
