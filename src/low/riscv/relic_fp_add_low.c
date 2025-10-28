@@ -57,7 +57,6 @@ void fp_addm_low(dig_t *c, const dig_t *a, const dig_t *b) {
 		carry = mpn_sub_n(c, c, fp_prime_get(), RLC_FP_DIGS);
 	}
 }
-#endif
 
 dig_t fp_addd_low(dig_t *c, const dig_t *a, const dig_t *b) {
 	return mpn_add_n(c, a, b, 2 * RLC_FP_DIGS);
@@ -72,7 +71,7 @@ void fp_addc_low(dig_t *c, const dig_t *a, const dig_t *b) {
 		mpn_sub_n(c + RLC_FP_DIGS, c + RLC_FP_DIGS, fp_prime_get(), RLC_FP_DIGS);
 	}
 }
-
+#endif
 dig_t fp_sub1_low(dig_t *c, const dig_t *a, const dig_t digit) {
 	return mpn_sub_1(c, a, RLC_FP_DIGS, digit);
 }
