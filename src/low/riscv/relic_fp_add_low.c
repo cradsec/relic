@@ -85,7 +85,7 @@ void fp_subm_low(dig_t *c, const dig_t *a, const dig_t *b) {
 		mpn_add_n(c, c, fp_prime_get(), RLC_FP_DIGS);
 	}
 }
-#endif
+
 dig_t fp_subd_low(dig_t *c, const dig_t *a, const dig_t *b) {
 	return mpn_sub_n(c, a, b, 2 * RLC_FP_DIGS);
 }
@@ -95,7 +95,7 @@ void fp_subc_low(dig_t *c, const dig_t *a, const dig_t *b) {
 		mpn_add_n(c + RLC_FP_DIGS, c + RLC_FP_DIGS, fp_prime_get(), RLC_FP_DIGS);
 	}
 }
-
+#endif
 void fp_negm_low(dig_t *c, const dig_t *a) {
 	if (fp_is_zero(a)) {
 		fp_zero(c);

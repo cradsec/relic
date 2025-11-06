@@ -21,7 +21,10 @@
 .global fp_addd_low
 .global fp_addc_low
 .global fp_subm_low
+.global fp_subd_low
+.global fp_subc_low
 .global fp_dbln_low
+.global fp_dblm_low
 .global fp_dblm_low
 
 /*
@@ -316,6 +319,119 @@ subm0:
 	sd	a5,8(a0)
 	sd	a6,16(a0)
 	sd	a7,24(a0)
+	ret
+
+fp_subd_low:
+	ld	t4,0(a1)
+	ld	t5,0(a2)
+	sub	a4,t4,t5
+	sd	a4,0(a0)
+	sltu	t6,t4,a4
+
+	ld	t4,8(a1)
+	ld	t5,8(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,8(a0)
+
+	ld	t4,16(a1)
+	ld	t5,16(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,16(a0)
+
+	ld	t4,24(a1)
+	ld	t5,24(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,24(a0)
+
+	ld	t4,32(a1)
+	ld	t5,32(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,32(a0)
+
+	ld	t4,40(a1)
+	ld	t5,40(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,40(a0)
+
+	ld	t4,48(a1)
+	ld	t5,48(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,48(a0)
+
+	ld	t4,56(a1)
+	ld	t5,56(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,56(a0)
+
+	mv	a0,t6
+
+	ret
+
+fp_subc_low:
+	ld	t4,0(a1)
+	ld	t5,0(a2)
+	sub	a4,t4,t5
+	sd	a4,0(a0)
+	sltu	t6,t4,a4
+
+	ld	t4,8(a1)
+	ld	t5,8(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,8(a0)
+
+	ld	t4,16(a1)
+	ld	t5,16(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,16(a0)
+
+	ld	t4,24(a1)
+	ld	t5,24(a2)
+	SUBB	a4,t4,t5,t6
+	sd	a4,24(a0)
+
+	ld	t4,32(a1)
+	ld	t5,32(a2)
+	SUBB	a4,t4,t5,t6
+
+	ld	t4,40(a1)
+	ld	t5,40(a2)
+	SUBB	a5,t4,t5,t6
+
+	ld	t4,48(a1)
+	ld	t5,48(a2)
+	SUBB	a6,t4,t5,t6
+
+	ld	t4,56(a1)
+	ld	t5,56(a2)
+	SUBB	a7,t4,t5,t6
+
+        li      t0,P0
+        li      t1,P1
+        li      t2,P2
+        li      t3,P3
+	beqz	t6,subc0
+
+	add	a4,a4,t0
+	sltu	t0,a4,t0
+	ADDC	a5,t1,t0,t4
+	ADDC	a6,t2,t0,t4
+	ADDC	a7,t3,t0,t4
+	sd	a4,32(a0)
+	sd	a5,40(a0)
+	sd	a6,48(a0)
+	sd	a7,56(a0)
+	ret
+subc0:
+	add	a4,a4,zero
+	sltu	t0,a4,zero
+	ADDC	a5,zero,t0,t4
+	ADDC	a6,zero,t0,t4
+	ADDC	a7,zero,t0,t4
+	sd	a4,32(a0)
+	sd	a5,40(a0)
+	sd	a6,48(a0)
+	sd	a7,56(a0)
+
 	ret
 
 .macro DBLC Z,A,C,T
