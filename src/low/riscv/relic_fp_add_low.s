@@ -26,6 +26,8 @@
 .global fp_dbln_low
 .global fp_dblm_low
 .global fp_dblm_low
+.global fp_hlvd_low
+.global fp_negm_low
 
 /*
  *   Carry, A = A + B + Carry
@@ -517,3 +519,110 @@ dblm0:
         sd      t3,16(a0)
         sd      t4,24(a0)
 	ret
+
+.macro	SHR1	DST,SRC,C1,C63,T
+	and	\T,\SRC,\C1
+	sll	\T,\T,\C63
+	srl	\DST,\DST,\C1
+	or	\DST,\DST,\T
+.endm
+
+fp_hlvd_low:
+	li	t6,1
+	li	t5,63
+
+	li	a4,P0
+	li	a5,P1
+	li	a6,P2
+	li	a7,P3
+
+	ld	t0,0(a1)
+	ld	t1,8(a1)
+	ld	t2,16(a1)
+	ld	t3,24(a1)
+
+	and	a3,t0,t6
+	beqz	a3,hlvd0
+
+	mv	a4,a4
+	mv	a5,a5
+	mv	a6,a6
+	mv	a7,a7
+	j	hlvd1
+hlvd0:
+	mv	a4,zero
+	mv	a5,zero
+	mv	a6,zero
+	mv	a7,zero
+hlvd1:	
+	add	t0,t0,a4
+	sltu	t4,t0,a4
+	ADDC	t1,a5,t4,a3
+	ADDC	t2,a6,t4,a3
+	ADDC	t3,a7,t4,a3
+	ld	a4,32(a1)
+	ld	a5,40(a1)
+	ld	a6,48(a1)
+	ld	a7,56(a1)
+	ADDC	a4,zero,t4,a3
+	ADDC	a5,zero,t4,a3
+	ADDC	a6,zero,t4,a3
+	ADDC	a7,zero,t4,a3
+
+	SHR1	t0,t1,t6,t5,t4
+	SHR1	t1,t2,t6,t5,t4
+	SHR1	t2,t3,t6,t5,t4
+	SHR1	t3,a4,t6,t5,t4
+	SHR1	a4,a5,t6,t5,t4
+	SHR1	a5,a6,t6,t5,t4
+	SHR1	a6,a7,t6,t5,t4
+	srl	a7,a7,t6
+
+	sd	t0,0(a0)
+	sd	t1,8(a0)
+	sd	t2,16(a0)
+	sd	t3,24(a0)
+	sd	a4,32(a0)
+	sd	a5,40(a0)
+	sd	a6,48(a0)
+	sd	a7,56(a0)
+	
+	ret
+
+fp_negm_low:
+        li      t0,P0
+        li      t1,P1
+        li      t2,P2
+        li      t3,P3
+
+	ld	t5,0(a1)
+	mv	a3,t5
+	sub	a4,t0,t5
+	sltu	t6,t0,a4
+
+	ld	t5,8(a1)
+	or	a3,a3,t5
+	SUBB	a5,t1,t5,t6
+
+	ld	t5,16(a1)
+	or	a3,a3,t5
+	SUBB	a6,t2,t5,t6
+
+	ld	t5,24(a1)
+	or	a3,a3,t5
+	SUBB	a7,t3,t5,t6
+
+	beqz	a3,negm0
+
+	sd	a4,0(a0)
+	sd	a5,8(a0)
+	sd	a6,16(a0)
+	sd	a7,24(a0)
+	ret
+negm0:
+	sd	zero,0(a0)
+	sd	zero,8(a0)
+	sd	zero,16(a0)
+	sd	zero,24(a0)
+	ret
+

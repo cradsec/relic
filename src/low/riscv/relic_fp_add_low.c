@@ -95,7 +95,7 @@ void fp_subc_low(dig_t *c, const dig_t *a, const dig_t *b) {
 		mpn_add_n(c + RLC_FP_DIGS, c + RLC_FP_DIGS, fp_prime_get(), RLC_FP_DIGS);
 	}
 }
-#endif
+
 void fp_negm_low(dig_t *c, const dig_t *a) {
 	if (fp_is_zero(a)) {
 		fp_zero(c);
@@ -103,7 +103,7 @@ void fp_negm_low(dig_t *c, const dig_t *a) {
 		mpn_sub_n(c, fp_prime_get(), a, RLC_FP_DIGS);
 	}
 }
-#ifdef __NO_RISCV_ASM__
+
 dig_t fp_dbln_low(dig_t *c, const dig_t *a) {
 	return mpn_add_n(c, a, a, RLC_FP_DIGS);
 }
@@ -126,7 +126,7 @@ void fp_hlvm_low(dig_t *c, const dig_t *a) {
     mpn_rshift(c, c, RLC_FP_DIGS, 1);
 	c[RLC_FP_DIGS - 1] ^= ((dig_t)carry << (RLC_DIG - 1));
 }
-
+#ifdef __NO_RISCV_ASM__
 void fp_hlvd_low(dig_t *c, const dig_t *a) {
 	dig_t carry = 0;
 
@@ -142,3 +142,4 @@ void fp_hlvd_low(dig_t *c, const dig_t *a) {
 	mpn_rshift(c, c, RLC_FP_DIGS, 1);
 	c[RLC_FP_DIGS - 1] ^= carry;
 }
+#endif
