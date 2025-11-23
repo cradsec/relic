@@ -520,17 +520,14 @@ dblm0:
         sd      t4,24(a0)
 	ret
 
-.macro	SHR1	DST,SRC,C1,C63,T
-	and	\T,\SRC,\C1
-	sll	\T,\T,\C63
-	srl	\DST,\DST,\C1
+.macro	SHR1	DST,SRC,T
+	andi	\T,\SRC,1
+	slli	\T,\T,63
+	srli	\DST,\DST,1
 	or	\DST,\DST,\T
 .endm
 
 fp_hlvd_low:
-	li	t6,1
-	li	t5,63
-
 	li	a4,P0
 	li	a5,P1
 	li	a6,P2
@@ -541,7 +538,7 @@ fp_hlvd_low:
 	ld	t2,16(a1)
 	ld	t3,24(a1)
 
-	and	a3,t0,t6
+	andi	a3,t0,1
 	beqz	a3,hlvd0
 
 	mv	a4,a4
@@ -569,14 +566,14 @@ hlvd1:
 	ADDC	a6,zero,t4,a3
 	ADDC	a7,zero,t4,a3
 
-	SHR1	t0,t1,t6,t5,t4
-	SHR1	t1,t2,t6,t5,t4
-	SHR1	t2,t3,t6,t5,t4
-	SHR1	t3,a4,t6,t5,t4
-	SHR1	a4,a5,t6,t5,t4
-	SHR1	a5,a6,t6,t5,t4
-	SHR1	a6,a7,t6,t5,t4
-	srl	a7,a7,t6
+	SHR1	t0,t1,t4
+	SHR1	t1,t2,t4
+	SHR1	t2,t3,t4
+	SHR1	t3,a4,t4
+	SHR1	a4,a5,t4
+	SHR1	a5,a6,t4
+	SHR1	a6,a7,t4
+	srl	a7,a7,1
 
 	sd	t0,0(a0)
 	sd	t1,8(a0)
