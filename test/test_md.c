@@ -112,7 +112,7 @@ uint8_t result_xmd_sha224[4][75] = {
 static int sha224(void) {
 	int code = RLC_ERR;
 	int i, j;
-	uint8_t message[MSG_SIZE], digest[28];
+	static uint8_t message[MSG_SIZE], digest[28];
 
 	TEST_ONCE("sha224 hash function is correct") {
 		for (i = 0; i < TEST_MAX; i++) {
@@ -195,7 +195,7 @@ uint8_t result_xmd_sha256[4][75] = {
 static int sha256(void) {
 	int code = RLC_ERR;
 	int i, j;
-	uint8_t message[MSG_SIZE], digest[32];
+	static uint8_t message[MSG_SIZE], digest[32];
 
 	TEST_ONCE("sha256 hash function is correct") {
 		for (i = 0; i < TEST_MAX; i++) {
@@ -292,7 +292,7 @@ uint8_t result_xmd_sha384[4][75] = {
 static int sha384(void) {
 	int code = RLC_ERR;
 	int i, j;
-	uint8_t message[MSG_SIZE], digest[48];
+	static uint8_t message[MSG_SIZE], digest[48];
 
 	TEST_ONCE("sha384 hash function is correct") {
 		for (i = 0; i < TEST_MAX; i++) {
@@ -387,7 +387,7 @@ uint8_t result_xmd_sha512[4][75] = {
 static int sha512(void) {
 	int code = RLC_ERR;
 	int i, j;
-	uint8_t message[MSG_SIZE], digest[64];
+	static uint8_t message[MSG_SIZE], digest[64];
 
 	TEST_ONCE("sha512 hash function is correct") {
 		for (i = 0; i < TEST_MAX; i++) {
